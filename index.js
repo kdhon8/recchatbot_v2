@@ -1,7 +1,5 @@
 const Anthropic = require('@anthropic-ai/sdk');
 const { Client, GatewayIntentBits } = require('discord.js');
-const fs = require('node:fs')
-const path = require('node:path');
 
 require('dotenv').config();
 
@@ -30,14 +28,14 @@ async function createMsg(msg) {
 client.on('messageCreate', async msg => {
     if (msg.author.bot) return;
 
-    if (msg.mentions.has(client.user)) {
+    if (msg.content.startsWith("비챤아")) {
         try {
             // 타이핑 시작
-            const typing = await msg.channel.sendTyping();
-            const userMsg = msg.content.replace(/<@!?\d+>/g, '').trim();
+            await msg.channel.sendTyping();
+            const userMsg = msg.content.substring(3);
 
             if (!userMsg) {
-                await msg.reply('왜');
+                await msg.reply('왜 불러');
                 return;
             }
 
